@@ -1,0 +1,170 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|c:\\users\\diego\\documents\\1  universidad\\compiladores\\proyecto solo\\proyectocompiladores\\proyectocompiladores\\managers\\lalrparsergenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|solutionrelative:proyectocompiladores\\managers\\lalrparsergenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|c:\\users\\diego\\documents\\1  universidad\\compiladores\\proyecto solo\\proyectocompiladores\\proyectocompiladores\\structurs\\lr1item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|solutionrelative:proyectocompiladores\\structurs\\lr1item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|c:\\users\\diego\\documents\\1  universidad\\compiladores\\proyecto solo\\proyectocompiladores\\proyectocompiladores\\managers\\lalr1symboltable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|solutionrelative:proyectocompiladores\\managers\\lalr1symboltable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|c:\\users\\diego\\documents\\1  universidad\\compiladores\\proyecto solo\\proyectocompiladores\\proyectocompiladores\\structurs\\lr0item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|solutionrelative:proyectocompiladores\\structurs\\lr0item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|c:\\users\\diego\\documents\\1  universidad\\compiladores\\proyecto solo\\proyectocompiladores\\proyectocompiladores\\structurs\\grammarproduction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|solutionrelative:proyectocompiladores\\structurs\\grammarproduction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|c:\\users\\diego\\documents\\1  universidad\\compiladores\\proyecto solo\\proyectocompiladores\\proyectocompiladores\\managers\\grammarverifier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|solutionrelative:proyectocompiladores\\managers\\grammarverifier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|c:\\users\\diego\\documents\\1  universidad\\compiladores\\proyecto solo\\proyectocompiladores\\proyectocompiladores\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|solutionrelative:proyectocompiladores\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|c:\\users\\diego\\documents\\1  universidad\\compiladores\\proyecto solo\\proyectocompiladores\\proyectocompiladores\\structurs\\symbol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|solutionrelative:proyectocompiladores\\structurs\\symbol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|c:\\users\\diego\\documents\\1  universidad\\compiladores\\proyecto solo\\proyectocompiladores\\proyectocompiladores\\structurs\\grammaraction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6CB8243-9D66-4728-9CC6-B7C9CA6274FC}|ProyectoCompiladores\\ProyectoCompiladores.csproj|solutionrelative:proyectocompiladores\\structurs\\grammaraction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 278,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LR1Item.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Structurs\\LR1Item.cs",
+              "RelativeDocumentMoniker": "ProyectoCompiladores\\Structurs\\LR1Item.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Structurs\\LR1Item.cs",
+              "RelativeToolTip": "ProyectoCompiladores\\Structurs\\LR1Item.cs",
+              "ViewState": "AQIAABwAAAAAAAAAAADwvz4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T18:54:25.903Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LALR1SymbolTable.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Managers\\LALR1SymbolTable.cs",
+              "RelativeDocumentMoniker": "ProyectoCompiladores\\Managers\\LALR1SymbolTable.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Managers\\LALR1SymbolTable.cs",
+              "RelativeToolTip": "ProyectoCompiladores\\Managers\\LALR1SymbolTable.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T07:15:51.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Symbol.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Structurs\\Symbol.cs",
+              "RelativeDocumentMoniker": "ProyectoCompiladores\\Structurs\\Symbol.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Structurs\\Symbol.cs",
+              "RelativeToolTip": "ProyectoCompiladores\\Structurs\\Symbol.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAuwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T02:40:57.74Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LALRParserGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Managers\\LALRParserGenerator.cs",
+              "RelativeDocumentMoniker": "ProyectoCompiladores\\Managers\\LALRParserGenerator.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Managers\\LALRParserGenerator.cs",
+              "RelativeToolTip": "ProyectoCompiladores\\Managers\\LALRParserGenerator.cs",
+              "ViewState": "AQIAAB4CAAAAAAAAAAAQwPYBAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T05:38:31.272Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LR0Item.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Structurs\\LR0Item.cs",
+              "RelativeDocumentMoniker": "ProyectoCompiladores\\Structurs\\LR0Item.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Structurs\\LR0Item.cs",
+              "RelativeToolTip": "ProyectoCompiladores\\Structurs\\LR0Item.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAA4AAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T05:35:35.52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GrammarVerifier.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Managers\\GrammarVerifier.cs",
+              "RelativeDocumentMoniker": "ProyectoCompiladores\\Managers\\GrammarVerifier.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Managers\\GrammarVerifier.cs",
+              "RelativeToolTip": "ProyectoCompiladores\\Managers\\GrammarVerifier.cs",
+              "ViewState": "AQIAADoBAAAAAAAAAADgv00BAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T03:06:52.504Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GrammarProduction.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Structurs\\GrammarProduction.cs",
+              "RelativeDocumentMoniker": "ProyectoCompiladores\\Structurs\\GrammarProduction.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Structurs\\GrammarProduction.cs",
+              "RelativeToolTip": "ProyectoCompiladores\\Structurs\\GrammarProduction.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAuwBEAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T03:07:38.009Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GrammarAction.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Structurs\\GrammarAction.cs",
+              "RelativeDocumentMoniker": "ProyectoCompiladores\\Structurs\\GrammarAction.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Structurs\\GrammarAction.cs",
+              "RelativeToolTip": "ProyectoCompiladores\\Structurs\\GrammarAction.cs",
+              "ViewState": "AQIAAB0AAAAAAAAAAADwvzcAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T03:56:03.438Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Program.cs",
+              "RelativeDocumentMoniker": "ProyectoCompiladores\\Program.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\1  Universidad\\Compiladores\\Proyecto solo\\ProyectoCompiladores\\ProyectoCompiladores\\Program.cs",
+              "RelativeToolTip": "ProyectoCompiladores\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-07T02:42:39.266Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

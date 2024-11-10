@@ -1,0 +1,6 @@
+PROGRAM prueba ;
+
+BEGIN
+variable1 := 5 * 4 + 3 * 5 ;
+END
+.
