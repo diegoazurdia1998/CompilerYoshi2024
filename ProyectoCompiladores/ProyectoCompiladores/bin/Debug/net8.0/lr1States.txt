@@ -1,0 +1,123 @@
+0
+	0 SSymbol -> program [initial_action] at(0,program) [$]
+	1 program -> PROGRAM identifier ; declarations compound_statement .'; [] at(0,PROGRAM) [$]
+1
+	0 SSymbol -> program [initial_action] at(1,) [$]
+2
+	0 program -> PROGRAM identifier ; declarations compound_statement .'; [] at(1,identifier) [$]
+3
+	0 program -> PROGRAM identifier ; declarations compound_statement .'; [] at(2,;) [$]
+4
+	0 program -> PROGRAM identifier ; declarations compound_statement .'; [] at(3,declarations) [$]
+	1 declarations -> VAR identifier : INTEGER ; declarations [] at(0,VAR) [BEGIN]
+	2 declarations -> ε; [] at(0,ε;) [BEGIN]
+5
+	0 program -> PROGRAM identifier ; declarations compound_statement .'; [] at(4,compound_statement) [$]
+	1 compound_statement -> BEGIN statement_list END'; [] at(0,BEGIN) [.';]
+6
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(1,identifier) [BEGIN]
+7
+	0 declarations -> ε; [] at(1,) [BEGIN]
+8
+	0 program -> PROGRAM identifier ; declarations compound_statement .'; [] at(5,.';) [$]
+9
+	0 compound_statement -> BEGIN statement_list END'; [] at(1,statement_list) [.';]
+	1 statement_list -> assignment [] at(0,assignment) [END';]
+	2 statement_list -> assignment ; statement_list>; [] at(0,assignment) [END';]
+	3 assignment -> identifier := expression>; [] at(0,identifier) [END';,;]
+10
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(2,:) [BEGIN]
+11
+	0 program -> PROGRAM identifier ; declarations compound_statement .'; [] at(6,) [$]
+12
+	0 compound_statement -> BEGIN statement_list END'; [] at(2,END';) [.';]
+13
+	0 statement_list -> assignment [] at(1,) [END';]
+14
+	0 statement_list -> assignment [] at(1,) [END';]
+	1 statement_list -> assignment ; statement_list>; [] at(1,;) [END';]
+15
+	0 assignment -> identifier := expression>; [] at(1,:=) [END';,;]
+16
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(3,INTEGER) [BEGIN]
+17
+	0 compound_statement -> BEGIN statement_list END'; [] at(3,) [.';]
+18
+	0 statement_list -> assignment ; statement_list>; [] at(2,statement_list>;) [END';]
+19
+	0 assignment -> identifier := expression>; [] at(2,expression>;) [END';,;]
+20
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(4,;) [BEGIN]
+21
+	0 statement_list -> assignment ; statement_list>; [] at(3,) [END';]
+22
+	0 assignment -> identifier := expression>; [] at(3,) [END';,;]
+23
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(5,declarations) [BEGIN]
+	1 declarations -> VAR identifier : INTEGER ; declarations [] at(0,VAR) [BEGIN]
+	2 declarations -> ε; [] at(0,ε;) [BEGIN]
+24
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(6,) [BEGIN]
+25
+	0 program -> PROGRAM identifier ; declarations compound_statement .'; [] at(3,declarations) [$]
+	1 declarations -> VAR identifier : INTEGER ; declarations [] at(0,VAR) [$]
+	2 declarations -> ε; [] at(0,ε;) [$]
+26
+	0 program -> PROGRAM identifier ; declarations compound_statement .'; [] at(4,compound_statement) [$]
+	1 compound_statement -> BEGIN statement_list END'; [] at(0,BEGIN) [$]
+27
+	0 compound_statement -> BEGIN statement_list END'; [] at(1,statement_list) [.';]
+	1 statement_list -> assignment [] at(0,assignment) [.';]
+	2 statement_list -> assignment ; statement_list>; [] at(0,assignment) [.';]
+	3 assignment -> identifier := expression>; [] at(0,identifier) [.';]
+28
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(1,identifier) [$]
+29
+	0 declarations -> ε; [] at(1,) [$]
+30
+	0 compound_statement -> BEGIN statement_list END'; [] at(1,statement_list) [$]
+	1 statement_list -> assignment [] at(0,assignment) [$]
+	2 statement_list -> assignment ; statement_list>; [] at(0,assignment) [$]
+	3 assignment -> identifier := expression>; [] at(0,identifier) [$]
+31
+	0 statement_list -> assignment [] at(1,) [.';]
+	1 statement_list -> assignment ; statement_list>; [] at(1,;) [.';]
+32
+	0 assignment -> identifier := expression>; [] at(1,:=) [.';]
+33
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(2,:) [$]
+34
+	0 compound_statement -> BEGIN statement_list END'; [] at(2,END';) [$]
+35
+	0 statement_list -> assignment [] at(1,) [$]
+	1 statement_list -> assignment ; statement_list>; [] at(1,;) [$]
+36
+	0 assignment -> identifier := expression>; [] at(1,:=) [$]
+37
+	0 statement_list -> assignment ; statement_list>; [] at(2,statement_list>;) [.';]
+38
+	0 assignment -> identifier := expression>; [] at(2,expression>;) [.';]
+39
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(3,INTEGER) [$]
+40
+	0 compound_statement -> BEGIN statement_list END'; [] at(3,) [$]
+41
+	0 statement_list -> assignment ; statement_list>; [] at(2,statement_list>;) [$]
+42
+	0 assignment -> identifier := expression>; [] at(2,expression>;) [$]
+43
+	0 statement_list -> assignment ; statement_list>; [] at(3,) [.';]
+44
+	0 assignment -> identifier := expression>; [] at(3,) [.';]
+45
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(4,;) [$]
+46
+	0 statement_list -> assignment ; statement_list>; [] at(3,) [$]
+47
+	0 assignment -> identifier := expression>; [] at(3,) [$]
+48
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(5,declarations) [$]
+	1 declarations -> VAR identifier : INTEGER ; declarations [] at(0,VAR) [$]
+	2 declarations -> ε; [] at(0,ε;) [$]
+49
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(6,) [$]

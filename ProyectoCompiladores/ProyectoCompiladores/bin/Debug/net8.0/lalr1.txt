@@ -1,0 +1,377 @@
+0
+	0 SSymbol -> program [initial_action] at(0,program) [$]
+	1 program -> PROGRAM identifier ; block . [save_program] at(0,PROGRAM) [$]
+1
+	0 SSymbol -> program [initial_action] at(1,) [$]
+2
+	0 program -> PROGRAM identifier ; block . [save_program] at(1,identifier) [$]
+3
+	0 program -> PROGRAM identifier ; block . [save_program] at(2,;) [$]
+4
+	0 program -> PROGRAM identifier ; block . [save_program] at(3,block) [$]
+	1 block -> declarations compound_statement [save_block,setscope_global] at(0,declarations) [.]
+	2 declarations -> var_declaration declarations [save_declarations] at(0,var_declaration) [BEGIN]
+	3 declarations -> procedure_declaration declarations [save_declarations,add_procedure] at(0,procedure_declaration) [BEGIN]
+	4 block -> declarations compound_statement [save_block,setscope_global,reduce_epsilon(0)] at(1,compound_statement) [.]
+	5 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(0,VAR) [VAR,PROCEDURE,BEGIN]
+	6 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0)] at(1,declarations) [BEGIN]
+	7 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(0,PROCEDURE) [VAR,PROCEDURE,BEGIN]
+	8 compound_statement -> BEGIN statement_list END [save_compound_statement] at(0,BEGIN) [.,;]
+	9 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0),reduce_epsilon(1)] at(2,) [BEGIN]
+5
+	0 program -> PROGRAM identifier ; block . [save_program] at(4,.) [$]
+6
+	0 block -> declarations compound_statement [save_block,setscope_global] at(1,compound_statement) [.]
+	1 compound_statement -> BEGIN statement_list END [save_compound_statement] at(0,BEGIN) [.,;]
+7
+	0 block -> declarations compound_statement [save_block,setscope_global] at(1,compound_statement) [.]
+	1 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0)] at(2,) [BEGIN]
+	2 compound_statement -> BEGIN statement_list END [save_compound_statement] at(0,BEGIN) [.,;]
+8
+	0 declarations -> var_declaration declarations [save_declarations] at(1,declarations) [BEGIN]
+	1 declarations -> var_declaration declarations [save_declarations] at(0,var_declaration) [BEGIN]
+	2 declarations -> procedure_declaration declarations [save_declarations,add_procedure] at(0,procedure_declaration) [BEGIN]
+	3 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(1)] at(2,) [BEGIN]
+	4 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(0,VAR) [VAR,PROCEDURE,BEGIN]
+	5 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0)] at(1,declarations) [BEGIN]
+	6 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(0,PROCEDURE) [VAR,PROCEDURE,BEGIN]
+	7 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0),reduce_epsilon(1)] at(2,) [BEGIN]
+9
+	0 declarations -> procedure_declaration declarations [save_declarations,add_procedure] at(1,declarations) [BEGIN]
+	1 declarations -> var_declaration declarations [save_declarations] at(0,var_declaration) [BEGIN]
+	2 declarations -> procedure_declaration declarations [save_declarations,add_procedure] at(0,procedure_declaration) [BEGIN]
+	3 declarations -> procedure_declaration declarations [save_declarations,add_procedure,reduce_epsilon(1)] at(2,) [BEGIN]
+	4 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(0,VAR) [VAR,PROCEDURE,BEGIN]
+	5 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0)] at(1,declarations) [BEGIN]
+	6 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(0,PROCEDURE) [VAR,PROCEDURE,BEGIN]
+	7 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0),reduce_epsilon(1)] at(2,) [BEGIN]
+10
+	0 block -> declarations compound_statement [save_block,setscope_global,reduce_epsilon(0)] at(2,) [.]
+11
+	0 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(1,identifier) [VAR,PROCEDURE,BEGIN]
+12
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(1,identifier) [VAR,PROCEDURE,BEGIN]
+13
+	0 compound_statement -> BEGIN statement_list END [save_compound_statement] at(1,statement_list) [.,;]
+	1 statement_list -> statement [save_statement_list] at(0,statement) [END]
+	2 statement_list -> statement statement_list_ext [save_statement_list] at(0,statement) [END]
+	3 statement -> assignment [save_statement] at(0,assignment) [END,;]
+	4 assignment -> identifier := expression [save_assignment,assign_value] at(0,identifier) [END,;]
+14
+	0 program -> PROGRAM identifier ; block . [save_program] at(5,) [$]
+15
+	0 block -> declarations compound_statement [save_block,setscope_global] at(2,) [.]
+16
+	0 declarations -> var_declaration declarations [save_declarations] at(2,) [BEGIN]
+17
+	0 declarations -> var_declaration declarations [save_declarations] at(2,) [BEGIN]
+	1 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0)] at(2,) [BEGIN]
+18
+	0 declarations -> procedure_declaration declarations [save_declarations,add_procedure] at(2,) [BEGIN]
+19
+	0 declarations -> procedure_declaration declarations [save_declarations,add_procedure] at(2,) [BEGIN]
+	1 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0)] at(2,) [BEGIN]
+20
+	0 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(2,:) [VAR,PROCEDURE,BEGIN]
+21
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(2,() [VAR,PROCEDURE,BEGIN]
+22
+	0 compound_statement -> BEGIN statement_list END [save_compound_statement] at(2,END) [.,;]
+23
+	0 statement_list -> statement [save_statement_list] at(1,) [END]
+24
+	0 statement_list -> statement [save_statement_list] at(1,) [END]
+	1 statement_list -> statement statement_list_ext [save_statement_list] at(1,statement_list_ext) [END]
+	2 statement_list_ext -> ; statement statement_list_ext [save_statement_list_ext] at(0,;) [END]
+	3 statement_list -> statement statement_list_ext [save_statement_list,reduce_epsilon(1)] at(2,) [END]
+25
+	0 statement -> assignment [save_statement] at(1,) [END,;]
+26
+	0 assignment -> identifier := expression [save_assignment,assign_value] at(1,:=) [END,;]
+27
+	0 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(3,type) [VAR,PROCEDURE,BEGIN]
+	1 type -> INTEGER [save_type] at(0,INTEGER) [;]
+	2 type -> REAL [save_type] at(0,REAL) [;]
+	3 type -> BOOLEAN' [save_type] at(0,BOOLEAN') [;]
+	4 type -> STRING [save_type] at(0,STRING) [;]
+28
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(3,parameter_list) [VAR,PROCEDURE,BEGIN]
+	1 parameter_list -> identifier : type parameter_list_ext [save_parameter_list,add_procedure_parameters] at(0,identifier) [)]
+	2 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local,reduce_epsilon(3)] at(4,)) [VAR,PROCEDURE,BEGIN]
+29
+	0 compound_statement -> BEGIN statement_list END [save_compound_statement] at(3,) [.,;]
+30
+	0 statement_list -> statement statement_list_ext [save_statement_list] at(2,) [END]
+31
+	0 statement_list_ext -> ; statement statement_list_ext [save_statement_list_ext] at(1,statement) [END]
+	1 statement -> assignment [save_statement] at(0,assignment) [;,END]
+	2 assignment -> identifier := expression [save_assignment,assign_value] at(0,identifier) [END,;]
+32
+	0 assignment -> identifier := expression [save_assignment,assign_value] at(2,expression) [END,;]
+	1 expression -> simple_expression expression_ext [save_expression] at(0,simple_expression) [END,;]
+	2 simple_expression -> term additive_operator term [save_simple_expression] at(0,term) [=,<>,<,<=,>,>=,END,;,)]
+	3 expression -> simple_expression expression_ext [save_expression,reduce_epsilon(0)] at(1,expression_ext) [END,;]
+	4 term -> factor multiplicative_operator factor [save_term] at(0,factor) [+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	5 simple_expression -> term additive_operator term [save_simple_expression,reduce_epsilon(0)] at(1,additive_operator) [=,<>,<,<=,>,>=,END,;,)]
+	6 expression_ext -> relational_operator simple_expression [save_expression_extension] at(0,relational_operator) [END,;,)]
+	7 expression -> simple_expression expression_ext [save_expression,reduce_epsilon(0),reduce_epsilon(1)] at(2,) [END,;]
+	8 factor -> ( expression ) [save_factor] at(0,() [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	9 factor -> identifier [save_identifier] at(0,identifier) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	10 factor -> number [save_number] at(0,number) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	11 factor -> boolean_constant [save_operator] at(0,boolean_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	12 factor -> string_constant [save_string] at(0,string_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	13 additive_operator -> + [save_operator] at(0,+) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	14 additive_operator -> - [save_operator] at(0,-) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	15 additive_operator -> OR [save_operator] at(0,OR) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	16 relational_operator -> = [save_operator] at(0,=) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	17 relational_operator -> <> [save_operator] at(0,<>) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	18 relational_operator -> < [save_operator] at(0,<) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	19 relational_operator -> <= [save_operator] at(0,<=) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	20 relational_operator -> > [save_operator] at(0,>) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	21 relational_operator -> >= [save_operator] at(0,>=) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	22 boolean_constant -> TRUE [save_boolean] at(0,TRUE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	23 boolean_constant -> FALSE [save_boolean] at(0,FALSE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	24 string_constant -> " str " [save_string] at(0,") [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+33
+	0 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(4,;) [VAR,PROCEDURE,BEGIN]
+34
+	0 type -> INTEGER [save_type] at(1,) [;]
+35
+	0 type -> REAL [save_type] at(1,) [;]
+36
+	0 type -> BOOLEAN' [save_type] at(1,) [;]
+37
+	0 type -> STRING [save_type] at(1,) [;]
+38
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(4,)) [VAR,PROCEDURE,BEGIN]
+39
+	0 parameter_list -> identifier : type parameter_list_ext [save_parameter_list,add_procedure_parameters] at(1,:) [)]
+40
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local,reduce_epsilon(3)] at(5,;) [VAR,PROCEDURE,BEGIN]
+41
+	0 statement_list_ext -> ; statement statement_list_ext [save_statement_list_ext] at(2,statement_list_ext) [END]
+	1 statement_list_ext -> ; statement statement_list_ext [save_statement_list_ext] at(0,;) [END]
+	2 statement_list_ext -> ; statement statement_list_ext [save_statement_list_ext,reduce_epsilon(2)] at(3,) [END]
+42
+	0 assignment -> identifier := expression [save_assignment,assign_value] at(3,) [END,;]
+43
+	0 expression -> simple_expression expression_ext [save_expression] at(1,expression_ext) [END,;]
+	1 expression_ext -> relational_operator simple_expression [save_expression_extension] at(0,relational_operator) [END,;,)]
+	2 expression -> simple_expression expression_ext [save_expression,reduce_epsilon(1)] at(2,) [END,;]
+	3 relational_operator -> = [save_operator] at(0,=) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	4 relational_operator -> <> [save_operator] at(0,<>) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	5 relational_operator -> < [save_operator] at(0,<) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	6 relational_operator -> <= [save_operator] at(0,<=) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	7 relational_operator -> > [save_operator] at(0,>) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	8 relational_operator -> >= [save_operator] at(0,>=) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+44
+	0 simple_expression -> term additive_operator term [save_simple_expression] at(1,additive_operator) [=,<>,<,<=,>,>=,END,;,)]
+	1 additive_operator -> + [save_operator] at(0,+) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	2 additive_operator -> - [save_operator] at(0,-) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	3 additive_operator -> OR [save_operator] at(0,OR) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+45
+	0 expression -> simple_expression expression_ext [save_expression,reduce_epsilon(0)] at(2,) [END,;]
+46
+	0 term -> factor multiplicative_operator factor [save_term] at(1,multiplicative_operator) [+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	1 multiplicative_operator -> * [save_operator] at(0,*) [(,identifier,number,TRUE,FALSE,"]
+	2 multiplicative_operator -> / [save_operator] at(0,/) [(,identifier,number,TRUE,FALSE,"]
+	3 multiplicative_operator -> AND [save_operator] at(0,AND) [(,identifier,number,TRUE,FALSE,"]
+47
+	0 simple_expression -> term additive_operator term [save_simple_expression,reduce_epsilon(0)] at(2,term) [=,<>,<,<=,>,>=,END,;,)]
+	1 term -> factor multiplicative_operator factor [save_term] at(0,factor) [+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	2 simple_expression -> term additive_operator term [save_simple_expression,reduce_epsilon(0),reduce_epsilon(2)] at(3,) [=,<>,<,<=,>,>=,END,;,)]
+	3 factor -> ( expression ) [save_factor] at(0,() [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	4 factor -> identifier [save_identifier] at(0,identifier) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	5 factor -> number [save_number] at(0,number) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	6 factor -> boolean_constant [save_operator] at(0,boolean_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	7 factor -> string_constant [save_string] at(0,string_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	8 boolean_constant -> TRUE [save_boolean] at(0,TRUE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	9 boolean_constant -> FALSE [save_boolean] at(0,FALSE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	10 string_constant -> " str " [save_string] at(0,") [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+48
+	0 expression_ext -> relational_operator simple_expression [save_expression_extension] at(1,simple_expression) [END,;,)]
+	1 simple_expression -> term additive_operator term [save_simple_expression] at(0,term) [END,;,)]
+	2 expression_ext -> relational_operator simple_expression [save_expression_extension,reduce_epsilon(1)] at(2,) [END,;,)]
+	3 term -> factor multiplicative_operator factor [save_term] at(0,factor) [+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	4 simple_expression -> term additive_operator term [save_simple_expression,reduce_epsilon(0)] at(1,additive_operator) [END,;,)]
+	5 factor -> ( expression ) [save_factor] at(0,() [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	6 factor -> identifier [save_identifier] at(0,identifier) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	7 factor -> number [save_number] at(0,number) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	8 factor -> boolean_constant [save_operator] at(0,boolean_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	9 factor -> string_constant [save_string] at(0,string_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	10 additive_operator -> + [save_operator] at(0,+) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	11 additive_operator -> - [save_operator] at(0,-) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	12 additive_operator -> OR [save_operator] at(0,OR) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	13 boolean_constant -> TRUE [save_boolean] at(0,TRUE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	14 boolean_constant -> FALSE [save_boolean] at(0,FALSE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	15 string_constant -> " str " [save_string] at(0,") [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+49
+	0 factor -> ( expression ) [save_factor] at(1,expression) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	1 expression -> simple_expression expression_ext [save_expression] at(0,simple_expression) [)]
+	2 simple_expression -> term additive_operator term [save_simple_expression] at(0,term) [=,<>,<,<=,>,>=,END,;,)]
+	3 expression -> simple_expression expression_ext [save_expression,reduce_epsilon(0)] at(1,expression_ext) [)]
+	4 term -> factor multiplicative_operator factor [save_term] at(0,factor) [+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	5 simple_expression -> term additive_operator term [save_simple_expression,reduce_epsilon(0)] at(1,additive_operator) [=,<>,<,<=,>,>=,END,;,)]
+	6 expression_ext -> relational_operator simple_expression [save_expression_extension] at(0,relational_operator) [END,;,)]
+	7 expression -> simple_expression expression_ext [save_expression,reduce_epsilon(0),reduce_epsilon(1)] at(2,) [)]
+	8 factor -> ( expression ) [save_factor] at(0,() [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	9 factor -> identifier [save_identifier] at(0,identifier) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	10 factor -> number [save_number] at(0,number) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	11 factor -> boolean_constant [save_operator] at(0,boolean_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	12 factor -> string_constant [save_string] at(0,string_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	13 additive_operator -> + [save_operator] at(0,+) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	14 additive_operator -> - [save_operator] at(0,-) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	15 additive_operator -> OR [save_operator] at(0,OR) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+	16 relational_operator -> = [save_operator] at(0,=) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	17 relational_operator -> <> [save_operator] at(0,<>) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	18 relational_operator -> < [save_operator] at(0,<) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	19 relational_operator -> <= [save_operator] at(0,<=) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	20 relational_operator -> > [save_operator] at(0,>) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	21 relational_operator -> >= [save_operator] at(0,>=) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+	22 boolean_constant -> TRUE [save_boolean] at(0,TRUE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	23 boolean_constant -> FALSE [save_boolean] at(0,FALSE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	24 string_constant -> " str " [save_string] at(0,") [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+50
+	0 factor -> identifier [save_identifier] at(1,) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+51
+	0 factor -> number [save_number] at(1,) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+52
+	0 factor -> boolean_constant [save_operator] at(1,) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+53
+	0 factor -> string_constant [save_string] at(1,) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+54
+	0 additive_operator -> + [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+55
+	0 additive_operator -> - [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+56
+	0 additive_operator -> OR [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,",=,<>,<,<=,>,>=,END,;,)]
+57
+	0 relational_operator -> = [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+58
+	0 relational_operator -> <> [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+59
+	0 relational_operator -> < [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+60
+	0 relational_operator -> <= [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+61
+	0 relational_operator -> > [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+62
+	0 relational_operator -> >= [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,",+,-,OR,END,;,)]
+63
+	0 boolean_constant -> TRUE [save_boolean] at(1,) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+64
+	0 boolean_constant -> FALSE [save_boolean] at(1,) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+65
+	0 string_constant -> " str " [save_string] at(1,str) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+66
+	0 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(5,var_declaration) [VAR,PROCEDURE,BEGIN]
+	1 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(0,VAR) [VAR,PROCEDURE,BEGIN]
+	2 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable,reduce_epsilon(5)] at(6,) [VAR,PROCEDURE,BEGIN]
+67
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(5,;) [VAR,PROCEDURE,BEGIN]
+68
+	0 parameter_list -> identifier : type parameter_list_ext [save_parameter_list,add_procedure_parameters] at(2,type) [)]
+	1 type -> INTEGER [save_type] at(0,INTEGER) [,]
+	2 type -> REAL [save_type] at(0,REAL) [,]
+	3 type -> BOOLEAN' [save_type] at(0,BOOLEAN') [,]
+	4 type -> STRING [save_type] at(0,STRING) [,]
+69
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local,reduce_epsilon(3)] at(6,block) [VAR,PROCEDURE,BEGIN]
+	1 block -> declarations compound_statement [save_block,setscope_global] at(0,declarations) [;]
+	2 declarations -> var_declaration declarations [save_declarations] at(0,var_declaration) [BEGIN]
+	3 declarations -> procedure_declaration declarations [save_declarations,add_procedure] at(0,procedure_declaration) [BEGIN]
+	4 block -> declarations compound_statement [save_block,setscope_global,reduce_epsilon(0)] at(1,compound_statement) [;]
+	5 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(0,VAR) [VAR,PROCEDURE,BEGIN]
+	6 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0)] at(1,declarations) [BEGIN]
+	7 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(0,PROCEDURE) [VAR,PROCEDURE,BEGIN]
+	8 compound_statement -> BEGIN statement_list END [save_compound_statement] at(0,BEGIN) [.,;]
+	9 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0),reduce_epsilon(1)] at(2,) [BEGIN]
+70
+	0 statement_list_ext -> ; statement statement_list_ext [save_statement_list_ext] at(3,) [END]
+71
+	0 expression -> simple_expression expression_ext [save_expression] at(2,) [END,;]
+72
+	0 simple_expression -> term additive_operator term [save_simple_expression] at(2,term) [=,<>,<,<=,>,>=,END,;,)]
+	1 term -> factor multiplicative_operator factor [save_term] at(0,factor) [+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	2 simple_expression -> term additive_operator term [save_simple_expression,reduce_epsilon(2)] at(3,) [=,<>,<,<=,>,>=,END,;,)]
+	3 factor -> ( expression ) [save_factor] at(0,() [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	4 factor -> identifier [save_identifier] at(0,identifier) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	5 factor -> number [save_number] at(0,number) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	6 factor -> boolean_constant [save_operator] at(0,boolean_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	7 factor -> string_constant [save_string] at(0,string_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	8 boolean_constant -> TRUE [save_boolean] at(0,TRUE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	9 boolean_constant -> FALSE [save_boolean] at(0,FALSE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	10 string_constant -> " str " [save_string] at(0,") [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+73
+	0 term -> factor multiplicative_operator factor [save_term] at(2,factor) [+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	1 factor -> ( expression ) [save_factor] at(0,() [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	2 factor -> identifier [save_identifier] at(0,identifier) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	3 factor -> number [save_number] at(0,number) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	4 factor -> boolean_constant [save_operator] at(0,boolean_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	5 factor -> string_constant [save_string] at(0,string_constant) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	6 boolean_constant -> TRUE [save_boolean] at(0,TRUE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	7 boolean_constant -> FALSE [save_boolean] at(0,FALSE) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+	8 string_constant -> " str " [save_string] at(0,") [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+74
+	0 multiplicative_operator -> * [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,"]
+75
+	0 multiplicative_operator -> / [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,"]
+76
+	0 multiplicative_operator -> AND [save_operator] at(1,) [(,identifier,number,TRUE,FALSE,"]
+77
+	0 simple_expression -> term additive_operator term [save_simple_expression,reduce_epsilon(0)] at(3,) [=,<>,<,<=,>,>=,END,;,)]
+78
+	0 expression_ext -> relational_operator simple_expression [save_expression_extension] at(2,) [END,;,)]
+79
+	0 factor -> ( expression ) [save_factor] at(2,)) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+80
+	0 string_constant -> " str " [save_string] at(2,") [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+81
+	0 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(6,) [VAR,PROCEDURE,BEGIN]
+82
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(6,block) [VAR,PROCEDURE,BEGIN]
+	1 block -> declarations compound_statement [save_block,setscope_global] at(0,declarations) [;]
+	2 declarations -> var_declaration declarations [save_declarations] at(0,var_declaration) [BEGIN]
+	3 declarations -> procedure_declaration declarations [save_declarations,add_procedure] at(0,procedure_declaration) [BEGIN]
+	4 block -> declarations compound_statement [save_block,setscope_global,reduce_epsilon(0)] at(1,compound_statement) [;]
+	5 var_declaration -> VAR identifier : type ; var_declaration [save_var_declaration,check_variable_exists,add_variable] at(0,VAR) [VAR,PROCEDURE,BEGIN]
+	6 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0)] at(1,declarations) [BEGIN]
+	7 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(0,PROCEDURE) [VAR,PROCEDURE,BEGIN]
+	8 compound_statement -> BEGIN statement_list END [save_compound_statement] at(0,BEGIN) [.,;]
+	9 declarations -> var_declaration declarations [save_declarations,reduce_epsilon(0),reduce_epsilon(1)] at(2,) [BEGIN]
+83
+	0 parameter_list -> identifier : type parameter_list_ext [save_parameter_list,add_procedure_parameters] at(3,parameter_list_ext) [)]
+	1 parameter_list_ext -> , identifier : type parameter_list_ext [save_parameter_list_ext,add_procedure_parameters] at(0,,) [)]
+84
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local,reduce_epsilon(3)] at(7,;) [VAR,PROCEDURE,BEGIN]
+85
+	0 simple_expression -> term additive_operator term [save_simple_expression] at(3,) [=,<>,<,<=,>,>=,END,;,)]
+86
+	0 term -> factor multiplicative_operator factor [save_term] at(3,) [+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+87
+	0 factor -> ( expression ) [save_factor] at(3,) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+88
+	0 string_constant -> " str " [save_string] at(3,) [*,/,AND,+,-,OR,=,<>,<,<=,>,>=,END,;,)]
+89
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(7,;) [VAR,PROCEDURE,BEGIN]
+90
+	0 parameter_list -> identifier : type parameter_list_ext [save_parameter_list,add_procedure_parameters] at(4,) [)]
+91
+	0 parameter_list_ext -> , identifier : type parameter_list_ext [save_parameter_list_ext,add_procedure_parameters] at(1,identifier) [)]
+92
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local,reduce_epsilon(3)] at(8,) [VAR,PROCEDURE,BEGIN]
+93
+	0 procedure_declaration -> PROCEDURE identifier ( parameter_list ) ; block ; [save_procedure_declaration,check_procedure_exists,add_procedure,setscope_local] at(8,) [VAR,PROCEDURE,BEGIN]
+94
+	0 parameter_list_ext -> , identifier : type parameter_list_ext [save_parameter_list_ext,add_procedure_parameters] at(2,:) [)]
+95
+	0 parameter_list_ext -> , identifier : type parameter_list_ext [save_parameter_list_ext,add_procedure_parameters] at(3,type) [)]
+	1 type -> INTEGER [save_type] at(0,INTEGER) [,]
+	2 type -> REAL [save_type] at(0,REAL) [,]
+	3 type -> BOOLEAN' [save_type] at(0,BOOLEAN') [,]
+	4 type -> STRING [save_type] at(0,STRING) [,]
+96
+	0 parameter_list_ext -> , identifier : type parameter_list_ext [save_parameter_list_ext,add_procedure_parameters] at(4,parameter_list_ext) [)]
+	1 parameter_list_ext -> , identifier : type parameter_list_ext [save_parameter_list_ext,add_procedure_parameters] at(0,,) [)]
+97
+	0 parameter_list_ext -> , identifier : type parameter_list_ext [save_parameter_list_ext,add_procedure_parameters] at(5,) [)]

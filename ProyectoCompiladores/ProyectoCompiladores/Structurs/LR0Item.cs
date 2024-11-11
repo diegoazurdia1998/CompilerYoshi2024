@@ -9,8 +9,9 @@ namespace ProyectoCompiladores.Structurs
     public class LR0Item
     {
         public GrammarProduction Rule { get; set; }
-        public int DotPosition { get; set; }
-        public LR0Item(string left, List<string> right, GrammarAction action, int dotPosition)
+        public int DotPosition { get; set; } 
+        public LR0Item Context {  get; set; }
+        public LR0Item(string left, List<string> right, int dotPosition, GrammarAction action = null)
         {
             Rule = new GrammarProduction(left, right, action);
             DotPosition = dotPosition;
@@ -25,6 +26,15 @@ namespace ProyectoCompiladores.Structurs
             Rule = item.Rule.Clone();
             DotPosition = item.DotPosition;
         }
+        public LR0Item Clone()
+        {
+            LR0Item clone = (LR0Item)this.MemberwiseClone();
+            clone.Rule = Rule.Clone();
+            clone.DotPosition = DotPosition;
+            if(Context != null) 
+                clone.Context = new LR0Item(Context);
+            return clone;
+        }
         public string GetNextSymbol()
         {
             if (DotPosition < Rule.Right.Count)
@@ -37,13 +47,20 @@ namespace ProyectoCompiladores.Structurs
         {
             if (DotPosition < Rule.Right.Count)
             {
-                return new LR0Item(Rule.Clone(), DotPosition + 1);
+                var item = new LR0Item(Rule.Clone(), DotPosition + 1);
+                item.Context = this.Clone();
+                return item;
             }
             throw new InvalidOperationException("Cannot shift past the end of the rule.");
         }
         public bool IsComplete()
         {
             return DotPosition >= Rule.Right.Count;
+        }
+        public override string ToString()
+        {
+            // Representar el ítem LR(0) y los lookaheads
+            return $"{Rule.ToString()} at({DotPosition},{GetNextSymbol()})";
         }
         public override bool Equals(object obj)
         {
@@ -57,7 +74,20 @@ namespace ProyectoCompiladores.Structurs
             // Comparar las propiedades
             return Rule.Equals(other.Rule) && DotPosition == other.DotPosition;
         }
-
+        public bool EqualsWDotWActions(LR0Item item)
+        {
+            if (Rule.EqualsWAction(item.Rule))
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool EqualsWDot(LR0Item item)
+        {
+            if (Rule.Equals(item.Rule))
+                return true;
+            return false;
+        }
         public override int GetHashCode()
         {
             // Combinar los códigos hash de las propiedades

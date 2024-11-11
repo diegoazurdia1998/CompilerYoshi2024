@@ -33,10 +33,14 @@ namespace ProyectoCompiladores.Structurs
         {
             return LRItem.GetNextSymbol();
         }
+        public LR1Item Shift()
+        {
+            return new LR1Item(LRItem.Shift(), new HashSet<string>(LookAhead));
+        }
         public override string ToString()
         {
             // Representar el ítem LR(0) y los lookaheads
-            return $"{LRItem} [{string.Join(", ", LookAhead)}]";
+            return $"{LRItem.ToString()} [{string.Join(",", LookAhead)}]";
         }
         public override bool Equals(object obj)
         {
@@ -58,5 +62,6 @@ namespace ProyectoCompiladores.Structurs
             }
             return hash;
         }
+
     }
 }

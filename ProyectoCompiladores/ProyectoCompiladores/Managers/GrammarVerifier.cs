@@ -219,6 +219,8 @@ namespace ProyectoCompiladores.Managers
             sectionValues = sections[currentSectionKey];
             foreach (string value in sectionValues)
             {
+                if (value.Equals(String.Empty))
+                    continue;
                 int equalsIndex = value.IndexOf('=');
                 string left = value.Substring(0, equalsIndex).Trim();
                 string rightWithActions = value.Substring(equalsIndex + 1).Trim();
@@ -253,30 +255,31 @@ namespace ProyectoCompiladores.Managers
                     {
                         string[] realRight = production.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                         AddProduction(left, realRight.ToList());
+                        AddSymbols(left, realRight);
                     }
                 }
             }
         }
         private void AddSymbols(string nonTerminal,string[] symbols)
         {
-            if (!NonTerminalSymbols.Contains(nonTerminal.Trim().Trim('<').Trim('>')))
+            if (!NonTerminalSymbols.Contains(nonTerminal.Trim(';').Trim().Trim('<').Trim('>')))
             {
-                NonTerminalSymbols.Add(nonTerminal.Trim().Trim('<').Trim('>'));
+                NonTerminalSymbols.Add(nonTerminal.Trim().Trim(';').Trim('<').Trim('>'));
             }
             foreach (string symbol in symbols) 
             { 
                 if(symbol.StartsWith("<"))
                 {
-                    if (!NonTerminalSymbols.Contains(symbol.Trim().Trim('<').Trim('>')))
+                    if (!NonTerminalSymbols.Contains(symbol.Trim().Trim(';').Trim('<').Trim('>')))
                     {
-                        NonTerminalSymbols.Add((symbol.Trim().Trim('<').Trim('>')));
+                        NonTerminalSymbols.Add((symbol.Trim().Trim(';').Trim('<').Trim('>')));
                     }
                 }
                 else if(symbol.StartsWith("\'"))
                 {
-                    if (!TerminalSymbols.Contains(symbol.Trim('\'')))
+                    if (!TerminalSymbols.Contains(symbol.Trim(';').Trim('\'')))
                     {
-                        TerminalSymbols.Add(symbol.Trim('\''));
+                        TerminalSymbols.Add(symbol.Trim(';').Trim('\''));
                     }
                 }
             }

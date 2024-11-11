@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,11 @@ namespace ProyectoCompiladores.Structurs
                 hash = hash * 31 + (action != null ? action.GetHashCode() : 0); // Combinar el hash
             }
             return hash;
+        }
+        public override string ToString()
+        {
+            // Representar el ítem LR(0) y los lookaheads
+            return $"{string.Join(",", Actions)}";
         }
     }
 }

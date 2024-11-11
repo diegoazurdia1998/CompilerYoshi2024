@@ -1,6 +1,7 @@
 ﻿using ProyectoCompiladores.Managers;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
@@ -128,6 +129,11 @@ namespace ProyectoCompiladores.Structurs
                 hash1 = HashCode.Combine(hash1, item);
             }
             return hash1 ^ hash;
+        }
+        public override string ToString()
+        {
+            // Representar el ítem LR(0) y los lookaheads
+            return $"{Left} -> {string.Join(" ", Right)} [{Action.ToString()}]";
         }
     }
 }

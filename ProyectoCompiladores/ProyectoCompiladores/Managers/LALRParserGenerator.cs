@@ -35,6 +35,9 @@ namespace ProyectoCompiladores.Managers
         private Dictionary<(int, string), int> Transitions;
         private string ExtensionSymbol;
         private HashSet<LR0Item> initialState;
+        private HashSet<int> ResolutedConflictIndex;
+        private List<HashSet<LR0Item>> LR0States;
+        private List<HashSet<LR1Item>> LR1States;
         public LALRParserGenerator(GrammarVerifier grammar)
         {
             Grammar = grammar;
@@ -43,6 +46,9 @@ namespace ProyectoCompiladores.Managers
             LALRActionsTable = new Dictionary<(int, string), (Action, int, GrammarAction)>();
             LALRConflictsTable = new Dictionary<(int, string), HashSet<(Action, int, GrammarAction)>>();
             Transitions = new Dictionary<(int, string), int>();
+            ResolutedConflictIndex = new HashSet<int>();
+            LR0States = new List<HashSet<LR0Item>>();
+            LR1States = new List<HashSet<LR1Item>>();
             ExtensionSymbol = "SSymbol";
             initialState = GetInitialState();
             GenerateNullable();
@@ -57,11 +63,11 @@ namespace ProyectoCompiladores.Managers
             // Aquí iría la lógica para construir la tabla LALR(1)
             // 1. Crear estados LR(0) a partir de las reglas de producción
             var states = GenerateLR0States();
+            LR0States = states._lr0States;
             ExportStates(states);
             // 3. Llenar la tabla de parseo LALR(1)
             BuildLALRTable(states._lr0States, states._transitions);
             ExportActionsTable();
-
         }
         public bool Parse(string filePath)
         {
@@ -239,15 +245,16 @@ namespace ProyectoCompiladores.Managers
 
             return symbolList;
         }
-        private (List<HashSet<LR0Item>> _lr0States, Dictionary<(int, string, List<string>), int> _transitions) GenerateLR0States()
+        private (List<HashSet<LR0Item>> _lr0States, Dictionary<(int, string), int> _transitions) GenerateLR0States()
         {
-            var transitions = new Dictionary<(int, string, List<string>), int>();
+            var transitions = new Dictionary<(int, string), int>();
             List<HashSet<LR0Item>> lr0States = new List<HashSet<LR0Item>>();
             // Item inicial
             var initialClosure = initialState;
             lr0States.Add(Closure(initialClosure));
             // Cola de estados, inicializada con el estado inicial
             var stateQueue = new Queue<HashSet<LR0Item>>([initialClosure]);
+
             while (stateQueue.Count > 0)
             {
                 var currentState = stateQueue.Dequeue();
@@ -262,6 +269,7 @@ namespace ProyectoCompiladores.Managers
                         if (itemSymbol != null && itemSymbol.Equals(symbol))
                         {
                             newItems.Add(item.Shift());
+                            
                         }
                         if (newItems.Count > 0)
                         {
@@ -278,7 +286,7 @@ namespace ProyectoCompiladores.Managers
                                 stateQueue.Enqueue(newState);
                             }
                             // Verificar si ya existe una transición para el estado y símbolo
-                            if (transitions.TryGetValue((lr0States.IndexOf(currentState), symbol, item.Rule.Right), out int existingStateIndex))
+                            if (transitions.TryGetValue((lr0States.IndexOf(currentState), symbol), out int existingStateIndex))
                             {
                                 if(existingStateIndex != newStateIndex)
                                 {
@@ -291,7 +299,8 @@ namespace ProyectoCompiladores.Managers
                                         // Si el nuevo estado contiene todas las producciones, cambiar el número de estado
                                         Console.WriteLine($"El nuevo estado {newStateIndex} contiene todas las producciones del estado existente {existingStateIndex}. " +
                                                           $"Se cambiará el estado a {newStateIndex}.");
-                                        transitions[(lr0States.IndexOf(currentState), symbol, item.Rule.Right)] = newStateIndex;
+                                        transitions[(lr0States.IndexOf(currentState), symbol)] = newStateIndex;
+                                        ResolutedConflictIndex.Add(existingStateIndex);
                                     }
                                     else
                                     {
@@ -304,11 +313,10 @@ namespace ProyectoCompiladores.Managers
                             }
                             else
                             {
-                                int r = lr0States.IndexOf(currentState);
                                 // Agregar la transición al diccionario
-                                transitions[(lr0States.IndexOf(currentState), symbol, item.Rule.Right)] = newStateIndex;
-                                if ((symbol.Equals("program") || symbol.Equals("PROGRAM")) && !transitions.ContainsKey((0, symbol, item.Rule.Right)))
-                                    transitions[(0, symbol, item.Rule.Right)] = newStateIndex;
+                                transitions[(lr0States.IndexOf(currentState), symbol)] = newStateIndex;
+                                if ((symbol.Equals("program") || symbol.Equals("PROGRAM")) && !transitions.ContainsKey((0, symbol)))
+                                    transitions[(0, symbol)] = newStateIndex;
                             }
                         }
                     }
@@ -346,10 +354,11 @@ namespace ProyectoCompiladores.Managers
                             if (production.Right.Count == 1 && production.Right[0].Equals("ε"))
                             {
                                 // Crear un nuevo item con el punto al inicio
-                                var newItem = GenerateNewGrammarProductionBecuaseEpsilon(item, nextSymbol, production.Action);
+                                var newItem = GenerateLR0ItemBecuaseEpsilon(item, nextSymbol, production.Action);
                                 // Agregar el nuevo item al cierre si no está ya presente
                                 if (!closure.Contains(newItem))
                                 {
+                                    newItem.Context = new(item);
                                     addedItems.Add(newItem);
                                     added = true; // Se ha agregado un nuevo item
                                 }
@@ -361,6 +370,7 @@ namespace ProyectoCompiladores.Managers
                                 // Agregar el nuevo item al cierre si no está ya presente
                                 if (!closure.Contains(newItem))
                                 {
+                                    newItem.Context = new(item);
                                     addedItems.Add(newItem);
                                     added = true; // Se ha agregado un nuevo item
                                 }
@@ -376,7 +386,7 @@ namespace ProyectoCompiladores.Managers
 
             return closure; // Devolver el cierre completo
         }
-        private LR0Item GenerateNewGrammarProductionBecuaseEpsilon(LR0Item item, string epsilonNonTerminal, GrammarAction action)
+        private LR0Item GenerateLR0ItemBecuaseEpsilon(LR0Item item, string epsilonNonTerminal, GrammarAction action)
         {
             // Crear una nueva producción basada en la producción original
             var production = new GrammarProduction(item.Rule.Left, new List<string>(item.Rule.Right), action);
@@ -406,7 +416,7 @@ namespace ProyectoCompiladores.Managers
             }
             return symbols;
         }
-        public void BuildLALRTable(List<HashSet<LR0Item>> lr0States, Dictionary<(int, string, List<string>), int> transitionsLR0)
+        public void BuildLALRTable(List<HashSet<LR0Item>> lr0States, Dictionary<(int, string), int> transitionsLR0)
         {
             // Paso 1: Generar la tabla de estados LALR(1)
             var lalrStates = GenerateLALRStates(lr0States, transitionsLR0);
@@ -415,7 +425,6 @@ namespace ProyectoCompiladores.Managers
             foreach (var state in lalrStates.Select((s, i) => new { State = s, Index = i }))
             {
                 int stateIndex = state.Index;
-
                 // Iterar sobre cada ítem en el estado
                 foreach (var item in state.State)
                 {
@@ -424,10 +433,10 @@ namespace ProyectoCompiladores.Managers
                     if (nextSymbol == null)
                     {
                         // Acción de reducción
-                        var lookaheadSymbols = GenerateLookaheadSymbols(item, state.State, stateIndex);
+                        var lookaheadSymbols = item.LookAhead;
                         foreach (var lookahead in lookaheadSymbols)
                         {
-                            HandleReduction(stateIndex, lookahead.Key, item);
+                            HandleReduction(stateIndex, lookahead, item);
                         }
                     }
                     else if (Grammar.IsTerminal(nextSymbol))
@@ -468,12 +477,12 @@ namespace ProyectoCompiladores.Managers
             // Si el símbolo que produce epsilon se encuentra en la producción
             if (epsilonIndex != -1)
             {
-
                 // Crear un nuevo ítem LR1 con el punto desplazado y los lookaheads del ítem original
-                var newItem = new LR1Item(new LR0Item(production, epsilonIndex), new HashSet<string>(item.LookAhead));
+                var newItem = item.Shift();
 
                 // Agregar la acción de reducción de epsilon
-                newItem.LRItem.Rule.Action.AddAction($"reduce_epsilon({epsilonIndex})");
+                if(!newItem.LRItem.Rule.Action.Actions.Contains($"reduce_epsilon({epsilonIndex})"))
+                    newItem.LRItem.Rule.Action.AddAction($"reduce_epsilon({epsilonIndex})");
 
                 return newItem;
             }
@@ -481,7 +490,7 @@ namespace ProyectoCompiladores.Managers
             // Si no se encuentra el símbolo, simplemente devolvemos el ítem original
             return item;
         }
-        private List<HashSet<LR1Item>> GenerateLALRStates(List<HashSet<LR0Item>> lr0States, Dictionary<(int, string, List<string>), int> transitionsLR0)
+        private List<HashSet<LR1Item>> GenerateLALRStates(List<HashSet<LR0Item>> lr0States, Dictionary<(int, string), int> transitionsLR0)
         {
             // Paso 1: Inicializar la lista de estados LALR(1)
             List<HashSet<LR1Item>> lalrStates = new List<HashSet<LR1Item>>();
@@ -499,29 +508,27 @@ namespace ProyectoCompiladores.Managers
                     var lr1Item = new LR1Item(item);
 
                     // Obtener los símbolos lookahead para el ítem
-                    var context = GetItemContext(item, currentLR0State, transitionsLR0, lr0States);
-                    var lookaheads = GetLookaheadsFromContext(item, context);
+                    var lookaheads = GetLookaheadsFromContext(item, currentLR0State);
                     foreach (var lookahead in lookaheads)
                     {
                         lr1Item.AddLookAheadSymbol(lookahead);
                     }
-
                     // Agregar el ítem LALR(1) al conjunto de cierre
                     closureState.Add(lr1Item);
                 }
 
                 // Generar una clave única para el estado basado en los ítems
                 string stateKey = GetStateKey(closureState);
-
+                if(closureState.Count != 0)
                 // Si el estado ya existe, combinarlo
-                if (stateMap.ContainsKey(stateKey))
-                {
-                    stateMap[stateKey].UnionWith(closureState);
-                }
-                else
-                {
-                    stateMap[stateKey] = closureState;
-                }
+                    if (stateMap.ContainsKey(stateKey))
+                    {
+                        stateMap[stateKey].UnionWith(closureState);
+                    }
+                    else
+                    {
+                        stateMap[stateKey] = closureState;
+                    }
             }
 
             // Paso 3: Agregar los estados combinados a la lista de estados LALR(1)
@@ -529,98 +536,117 @@ namespace ProyectoCompiladores.Managers
             {
                 lalrStates.Add(combinedState);
             }
-
             // Paso 4: Generar transiciones entre los estados LALR(1)
             GenerateTransitions(lalrStates);
-
-            return lalrStates;
-        }
-        public HashSet<LR0Item> GetItemContext(LR0Item item, int currentState, Dictionary<(int, string, List<string>), int> transitionsLR0, List<HashSet<LR0Item>> lr0States)
-        {
-            HashSet<LR0Item> previousState = new HashSet<LR0Item>();
-
-            // Verificar que la posición del punto no sea 0
-            if (item.DotPosition <= 0)
+            // Escritura de archivo
+            using (StreamWriter writer = new StreamWriter("lr1States.txt"))
             {
-                return previousState; // Retornar un conjunto vacío si no hay contexto previo
-            }
-
-            string previousSymbol = item.Rule.Right[item.DotPosition - 1];
-
-            // Iterar sobre las transiciones para encontrar el contexto previo
-            foreach (var transition in transitionsLR0)
-            {
-                if (transition.Value == currentState)
+                int p = 0;
+                foreach (var lr in lalrStates)
                 {
-                    // Verificar si el índice de transición coincide con el ítem actual
-                    if (transition.Key.Item3.SequenceEqual(item.Rule.Right) && transition.Key.Item2.Equals(previousSymbol))
+                    int q = 0;
+                    writer.WriteLine(p);
+                    foreach (var item in lr)
                     {
-                        // Agregar el estado correspondiente a previousState
-                        previousState.UnionWith(lr0States[transition.Key.Item1]);
+                        writer.WriteLine($"\t{q} {item.ToString()}");
+                        q++;
                     }
+                    p++;
                 }
             }
-
-            return previousState;
+            return lalrStates;
         }
-        private HashSet<string> GetLookaheadsFromContext(LR0Item item, HashSet<LR0Item> context)
+        
+        private HashSet<string> GetLookaheadsFromContext(LR0Item item, int contextIndex)
         {
             HashSet<string> lookaheads = new HashSet<string>();
             string curretSymbol = item.Rule.Left; // La izquierda del item es el simbolo al cual determinar su lookahead
-            // Iterar sobre los ítems en el contexto
-            foreach (var ctxItem in context)
-            { // Por cada produccion del contexto si esta produce al simbolo añade lookahead
-                if (ctxItem.Rule.Right.Contains(curretSymbol))
+            if (item.Rule.Left.Equals(ExtensionSymbol))
+            {
+                lookaheads.Add("$");
+                return lookaheads;
+            }
+            var contextState = LR0States[contextIndex];
+            if(contextState.TryGetValue(item, out LR0Item ci))
+            {
+                if (Follow.TryGetValue(item.Rule.Left, out var contextFollow))
                 {
-                    int currentIndex = ctxItem.Rule.Right.IndexOf(curretSymbol); // Donde esta el simbolo
-                    for(int i = currentIndex + 1; i < ctxItem.Rule.Right.Count; i++)
-                    {// determinar los simbolos frente a al simbolo analizado
-                        string lookaheadFromHere = ctxItem.Rule.Right[i]; 
-                        if (Grammar.IsTerminal(lookaheadFromHere))
-                        {// si es terminal solo se agrega al lookahead y para de buscar simbolos
-                            lookaheads.Add(lookaheadFromHere);
-                            break;
-                        }
-                        else if (Grammar.IsNonTerminal(lookaheadFromHere))
-                        {// si es no terminal se añade el first y se verifica si hay que seguir analizando simbolos
-                            lookaheads.UnionWith(First[lookaheadFromHere]);
-                            if (!Nullable[lookaheadFromHere])
-                            {
-                                break;
-                            }
-                            // Si el simbolo es nullable y es el ultimo simbolo de la produccion se añade el follow de la izquierda del contexto
-                            if(i == ctxItem.Rule.Right.Count - 1)
-                            {
-                                lookaheads.UnionWith(Follow[ctxItem.Rule.Left][String.Join(" ", ctxItem.Rule.Right)]);
-                            }
-                        }
-                    }
-                    //Si el simbolo esta al final de la produccion se añade el follow de la izquierda del contexto
-                    if(currentIndex ==  ctxItem.Rule.Right.Count - 1)
+                    int stateIndex = contextIndex;
+                    do
                     {
-                        lookaheads.UnionWith(Follow[ctxItem.Rule.Left][String.Join("", ctxItem.Rule.Right)]);
+                        if (contextFollow.TryGetValue(ci.Rule.Left, out var follow))
+                        {
+                            lookaheads.UnionWith(follow);
+                            if (lookaheads.Count > 0)
+                                break;
+                        }
+                        if (!contextState.Contains(ci.Context))
+                        {
+                            if(stateIndex < 0)
+                                break ;
+                            contextState = LR0States[stateIndex];
+                            stateIndex--;
+                                
+                        }
+                        else
+                        {
+                            foreach (var state in contextState)
+                            {
+                                if (state.Equals(ci.Context))
+                                {
+                                    ci = state;
+                                    break;
+                                }
+                            }
+                        }
+
+                    } while (ci != null);
+                    if (lookaheads.Count == 0)
+                    {
+                        if (contextFollow.TryGetValue(ci.Rule.Left, out var follow))
+                        {
+
+                        }
                     }
                 }
+                else Console.WriteLine($"No existe contexto valido para {item.ToString()}");
             }
+            else
+            {
+                Console.WriteLine($"No existe contexto valido para {item.ToString()}");
+            }
+            
+            lookaheads.Remove("ε");
             return lookaheads;
         }
         private void GenerateTransitions(List<HashSet<LR1Item>> lalrStates)
         {
-            for (int currentStateId = 0; currentStateId < lalrStates.Count; currentStateId++)
-            {
-                var currentState = lalrStates[currentStateId];
+            List<HashSet<LR1Item>> newStates = new List<HashSet<LR1Item>>();
+            HashSet<string> existingStateKeys = new HashSet<string>();
 
-                // Crear un diccionario para las transiciones desde el estado actual
+            foreach (var state in lalrStates)
+            {
+                existingStateKeys.Add(GetStateKey(state));
+            }
+            int max = lalrStates.Count;
+            for (int currentStateId = 0; currentStateId < max; currentStateId++)
+            {
+                HashSet<LR1Item> currentState;
+                if(currentStateId < lalrStates.Count)
+                    currentState = lalrStates[currentStateId];
+                else
+                {
+                    int p = currentStateId - lalrStates.Count;
+                    currentState = newStates[p];
+                }
                 var transitions = new Dictionary<string, HashSet<LR1Item>>();
 
-                // Iterar sobre los ítems en el estado actual
                 foreach (var item in currentState)
                 {
                     string nextSymbol = item.GetNextSymbol();
                     if (nextSymbol != null)
                     {
-                        // Crear un nuevo ítem con el punto desplazado
-                        var newItem = new LR1Item(item.LRItem.Shift());
+                        var newItem = new LR1Item(item.LRItem.Shift(), item.LookAhead); 
                         if (!transitions.ContainsKey(nextSymbol))
                         {
                             transitions[nextSymbol] = new HashSet<LR1Item>();
@@ -629,23 +655,43 @@ namespace ProyectoCompiladores.Managers
                     }
                 }
 
-                // Calcular el cierre para cada transición
                 foreach (var transition in transitions)
                 {
                     string symbol = transition.Key;
                     HashSet<LR1Item> newStateItems = new HashSet<LR1Item>(Closure(transition.Value));
 
+                    // Generar una clave única para el nuevo estado
+                    string newStateKey = GetStateKey(newStateItems);
+
+                    // Verificar si el nuevo estado ya existe
+                    if (!existingStateKeys.Contains(newStateKey))
+                    {
+                        existingStateKeys.Add(newStateKey);
+                        newStates.Add(newStateItems);
+                    }
+
                     // Obtener el ID del nuevo estado
                     int newStateId = GetStateId(newStateItems, lalrStates);
                     if (newStateId == -1)
                     {
-                        // Si el nuevo estado no existe, agregarlo a la lista de estados
-                        newStateId = lalrStates.Count;
-                        lalrStates.Add(newStateItems);
+                        newStateId = lalrStates.Count + newStates.Count - 1; // ID del nuevo estado
+                        max = lalrStates.Count + newStates.Count;
                     }
 
                     // Agregar la transición al diccionario
                     Transitions[(currentStateId, symbol)] = newStateId;
+                }
+            }
+
+            // Agregar los nuevos estados a lalrStates
+            lalrStates.AddRange(newStates);
+
+            // Escritura de archivo
+            using (StreamWriter writer = new StreamWriter("lr1Transitions.txt"))
+            {
+                foreach (var lr in Transitions.Keys)
+                {
+                    writer.WriteLine($"\t{lr.Item1} -> {lr.Item2} -> {Transitions[lr]}");
                 }
             }
         }
@@ -718,7 +764,7 @@ namespace ProyectoCompiladores.Managers
             // Buscar el estado en la lista de estados LALR(1)
             for (int i = 0; i < lalrStates.Count; i++)
             {
-                if (GetStateKey(lalrStates[i]) == stateKey)
+                if (GetStateKey(lalrStates[i]).Equals(stateKey))
                 {
                     return i; // Retornar el ID del estado existente
                 }
@@ -729,6 +775,12 @@ namespace ProyectoCompiladores.Managers
         private void HandleReduction(int stateIndex, string lookahead, LR1Item handleItem)
         {
             int reduceIndex = GetIndexOfProduction(handleItem.LRItem.Rule);
+            if(reduceIndex < 0)
+            {
+                //
+                Console.WriteLine($"No existe produccion por la cual reducir para {handleItem.ToString()}");
+                return;
+            }
             if (!LALRActionsTable.ContainsKey((stateIndex, lookahead)))
             {
                 LALRActionsTable[(stateIndex, lookahead)] = (Action.Reduce, reduceIndex, handleItem.LRItem.Rule.Action);
@@ -816,103 +868,6 @@ namespace ProyectoCompiladores.Managers
             }
             return -1;
         }
-        private Dictionary<string, HashSet<string>> GenerateLookaheadSymbols(LR1Item production, HashSet<LR1Item> context, int currentStateIndex)
-        {
-            var lookaheadSymbols = new Dictionary<string, HashSet<string>>();
-            string currentSymbol = production.LRItem.Rule.Left;
-
-            // Obtener las producciones que pueden llevar al símbolo actual desde el estado actual
-            var productionsForNonTerminal = context.Where(item => item.LRItem.Rule.Right.Contains(currentSymbol));
-
-            // Generar lookaheads a partir de las producciones en el contexto
-            foreach (var contextProduction in productionsForNonTerminal)
-            {
-                bool isNullableProduction = true;
-                HashSet<string> currentLookaheads = new HashSet<string>();
-
-                // Iterar sobre los símbolos que siguen al símbolo actual
-                for (int i = contextProduction.LRItem.Rule.Right.IndexOf(currentSymbol) + 1; i < contextProduction.LRItem.Rule.Right.Count; i++)
-                {
-                    var contextSymbol = contextProduction.LRItem.Rule.Right[i];
-
-                    if (!Grammar.IsNonTerminal(contextSymbol))
-                    {
-                        // Si encontramos un terminal, lo añadimos a los lookaheads
-                        currentLookaheads.Add(contextSymbol);
-                        isNullableProduction = false;
-                        break; // Salimos del bucle, ya que solo necesitamos el primer terminal
-                    }
-                    else
-                    {
-                        // Si es un no terminal, añadimos su conjunto FIRST (sin ε)
-                        foreach (var firstSymbol in First[contextSymbol])
-                        {
-                            if (firstSymbol != "ε")
-                            {
-                                currentLookaheads.Add(firstSymbol);
-                            }
-                        }
-
-                        // Verificamos si el no terminal es nullable
-                        if (!IsNullable(contextSymbol))
-                        {
-                            isNullableProduction = false;
-                            break; // Si no es nullable, salimos del bucle
-                        }
-                    }
-                }
-
-                // Si la producción es nullable, añadimos los símbolos de FOLLOW del no terminal
-                if (isNullableProduction)
-                {
-                    // Aquí necesitamos acceder a FOLLOW[production.Left] en el contexto de la producción actual
-                    if (Follow[currentSymbol].ContainsKey(contextProduction.LRItem.Rule.Left))
-                    {
-                        currentLookaheads.UnionWith(Follow[currentSymbol][contextProduction.LRItem.Rule.Left]);
-                    }
-                }
-
-                // Asociamos los lookaheads con la producción
-                foreach (var lookahead in currentLookaheads)
-                {
-                    if (!lookaheadSymbols.ContainsKey(lookahead))
-                    {
-                        lookaheadSymbols[lookahead] = new HashSet<string>();
-                    }
-                    lookaheadSymbols[lookahead].Add(String.Join(" ", contextProduction.LRItem.Rule.Right)); // Añadimos la producción como string
-                }
-            }
-
-            // Generar lookaheads basados en las transiciones
-            foreach (var transition in Transitions)
-            {
-                if (transition.Key.Item1 == currentStateIndex)
-                {
-                    string nextSymbol = transition.Key.Item2;
-                    if (Grammar.IsNonTerminal(nextSymbol))
-                    {
-                        // Obtener las producciones que derivan del no terminal
-                        var productions = GrammarRules[nextSymbol];
-                        foreach (var productionRule in productions)
-                        {
-                            // Obtener los lookaheads para cada producción
-                            var lookaheadsFromProduction = GenerateLookaheadSymbols(new LR1Item(new(new GrammarProduction(nextSymbol, productionRule), 0)), context, transition.Value);
-                            foreach (var lookahead in lookaheadsFromProduction)
-                            {
-                                if (!lookaheadSymbols.ContainsKey(lookahead.Key))
-                                {
-                                    lookaheadSymbols[lookahead.Key] = new HashSet<string>();
-                                }
-                                lookaheadSymbols[lookahead.Key].UnionWith(lookahead.Value);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return lookaheadSymbols;
-        }
-
         public HashSet<LR0Item> GetInitialState()
         {
             // 'SSymbol' es el símbolo extendido
@@ -1223,7 +1178,7 @@ namespace ProyectoCompiladores.Managers
             }
             row++;
             basicActionsWorksheet.Cells[row, 1].Style.Numberformat.Format = "General";
-            basicActionsWorksheet.Cells[row, 1].Value = $"=INDICE(B2:Z{row}; COINCIDIR(B{row}; A2:A{row}; 0); COINCIDIR(C{row}; B1:BE1; 0))";
+            basicActionsWorksheet.Cells["BG2"].Value = $"=INDICE(B2:BE753; COINCIDIR(BG3; A2:A753; 0); COINCIDIR(BG4; B1:BE1; 0))";
             // Ajustar el ancho de las columnas
             basicActionsWorksheet.Cells.AutoFitColumns();
             basicActionsWorksheet.Cells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center; 
@@ -1280,7 +1235,7 @@ namespace ProyectoCompiladores.Managers
             }
             row++;
             actionsAndConflictsWorksheet.Cells[row, 1].Style.Numberformat.Format = "General";
-            actionsAndConflictsWorksheet.Cells[row, 1].Value = $"=INDICE(B2:Z{row}; COINCIDIR(B{row}; A2:A{row}; 0); COINCIDIR(C{row}; B1:BE1; 0))";
+            actionsAndConflictsWorksheet.Cells["BG2"].Value = $"=INDICE(B2:BE753; COINCIDIR(BG3; A2:A753; 0); COINCIDIR(BG4; B1:BE1; 0))";
             // Ajustar el ancho de las columnas
             actionsAndConflictsWorksheet.Cells.AutoFitColumns();
             actionsAndConflictsWorksheet.Cells.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
@@ -1299,7 +1254,7 @@ namespace ProyectoCompiladores.Managers
             };
             return actionSymbol;
         }
-        public void ExportStates((List<HashSet<LR0Item>> _lr0States, Dictionary<(int, string, List<string>), int> _transitions) states)
+        public void ExportStates((List<HashSet<LR0Item>> _lr0States, Dictionary<(int, string), int> _transitions) states)
         {
 
             // Establecer el contexto de licencia
@@ -1331,7 +1286,7 @@ namespace ProyectoCompiladores.Managers
                         if (!item.IsComplete())
                         {
                             worksheet.Cells[row, 4].Value = $"{item.Rule.Right[item.DotPosition]}";
-                            int transition = states._transitions[(state.Index, item.Rule.Right[item.DotPosition], item.Rule.Right)];
+                            int transition = states._transitions[(state.Index, item.Rule.Right[item.DotPosition])];
                             worksheet.Cells[row, 5].Value = $"{state.Index} > {item.Rule.Right[item.DotPosition]} > {transition}"; // worksheet.Cells[row, 3].Value = "Estado siguiente"; // Ejemplo
 
                         }
