@@ -7,30 +7,30 @@ SETS
     digit = '0'..'9';
 
 TOKENS
-    number = digit digit*;
-    identifier = letter (letter | digit)*;
+    number = digit digit *
+    identifier = letter ( letter | digit ) *
 
 KEYWORDS
-    'PROGRAM', 'VAR', 'BEGIN', 'END', 'INTEGER';
+    'PROGRAM', 'VAR', 'BEGIN', 'END', 'INTEGER' ;
 
 PRODUCTIONS
-    <program> = 'PROGRAM' identifier ';' <declarations> <compound_statement> '.';
+    <program> = 'PROGRAM' identifier ';' <declarations> <compound_statement> '.'
     
     <declarations> = 'VAR' identifier ':' 'INTEGER' ';' <declarations>
-    <declarations> = ε;
+    <declarations> = ε
     
-    <compound_statement> = 'BEGIN' <statement_list> 'END';
+    <compound_statement> = 'BEGIN' <statement_list> 'END'
     
     <statement_list> = <assignment> 
-    <statement_list> = <assignment> ';' <statement_list>;
+    <statement_list> = <assignment> ';' <statement_list>
     
-    <assignment> = identifier ':=' <expression>;
+    <assignment> = identifier ':=' <expression>
     
     <expression> = <term> '+' <term>
     <expression> = <term>;
                  
     <term> = <factor> '*' <factor>
-    <term> = <factor>;
+    <term> = <factor>
 
     <factor> = identifier 
-    <factor> = number;
+    <factor> = number

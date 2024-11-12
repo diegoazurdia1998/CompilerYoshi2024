@@ -542,16 +542,17 @@ namespace ProyectoCompiladores.Managers
             using (StreamWriter writer = new StreamWriter("lr1States.txt"))
             {
                 int p = 0;
+                int q = 0;
                 foreach (var lr in lalrStates)
                 {
-                    int q = 0;
                     writer.WriteLine(p);
                     foreach (var item in lr)
                     {
                         writer.WriteLine($"\t{q} {item.ToString()}");
-                        q++;
+                        
                     }
                     p++;
+                    q = p;
                 }
             }
             return lalrStates;

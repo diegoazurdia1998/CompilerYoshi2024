@@ -1,0 +1,7 @@
+PROGRAM Suma ;
+VAR a : INTEGER ;
+VAR b : INTEGER ;
+BEGIN
+    a := 3
+    b := a + 2
+END.

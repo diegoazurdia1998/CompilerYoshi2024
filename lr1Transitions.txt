@@ -41,7 +41,7 @@
 	32 -> factor -> 35
 	32 -> identifier -> 28
 	32 -> number -> 29
-	36 -> declarations -> 42
+	36 -> declarations -> 37
 	36 -> VAR -> 43
 	36 -> compound_statement -> 7
 	36 -> BEGIN -> 44

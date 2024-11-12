@@ -1,0 +1,304 @@
+0
+	0 SSymbol -> program [initial_action] at(0,program) [$]
+	1 program -> PROGRAM identifier ; declarations compound_statement . [] at(0,PROGRAM) [$]
+1
+	0 SSymbol -> program [initial_action] at(1,) [$]
+2
+	0 program -> PROGRAM identifier ; declarations compound_statement . [] at(1,identifier) [$]
+3
+	0 program -> PROGRAM identifier ; declarations compound_statement . [] at(2,;) [$]
+4
+	0 program -> PROGRAM identifier ; declarations compound_statement . [] at(3,declarations) [$]
+	1 declarations -> VAR identifier : INTEGER ; declarations [] at(0,VAR) [BEGIN]
+	2 program -> PROGRAM identifier ; declarations compound_statement . [reduce_epsilon(3)] at(4,compound_statement) [$]
+	3 compound_statement -> BEGIN statement_list END [] at(0,BEGIN) [.]
+5
+	0 program -> PROGRAM identifier ; declarations compound_statement . [] at(4,compound_statement) [$]
+	1 compound_statement -> BEGIN statement_list END [] at(0,BEGIN) [.]
+6
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(1,identifier) [BEGIN]
+7
+	0 program -> PROGRAM identifier ; declarations compound_statement . [reduce_epsilon(3)] at(5,.) [$]
+8
+	0 compound_statement -> BEGIN statement_list END [] at(1,statement_list) [.]
+	1 statement_list -> assignment [] at(0,assignment) [END]
+	2 statement_list -> assignment ; statement_list [] at(0,assignment) [END]
+	3 assignment -> identifier := expression [] at(0,identifier) [END,;]
+9
+	0 program -> PROGRAM identifier ; declarations compound_statement . [] at(5,.) [$]
+10
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(2,:) [BEGIN]
+11
+	0 program -> PROGRAM identifier ; declarations compound_statement . [reduce_epsilon(3)] at(6,) [$]
+12
+	0 compound_statement -> BEGIN statement_list END [] at(2,END) [.]
+13
+	0 statement_list -> assignment [] at(1,) [END]
+14
+	0 statement_list -> assignment [] at(1,) [END]
+	1 statement_list -> assignment ; statement_list [] at(1,;) [END]
+15
+	0 assignment -> identifier := expression [] at(1,:=) [END,;]
+16
+	0 program -> PROGRAM identifier ; declarations compound_statement . [] at(6,) [$]
+17
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(3,INTEGER) [BEGIN]
+18
+	0 compound_statement -> BEGIN statement_list END [] at(3,) [.]
+19
+	0 statement_list -> assignment ; statement_list [] at(2,statement_list) [END]
+	1 statement_list -> assignment [] at(0,assignment) [END]
+	2 statement_list -> assignment ; statement_list [] at(0,assignment) [END]
+	3 assignment -> identifier := expression [] at(0,identifier) [END,;]
+20
+	0 assignment -> identifier := expression [] at(2,expression) [END,;]
+	1 expression -> term + term [] at(0,term) [END,;]
+	2 expression -> term [] at(0,term) [END,;]
+	3 term -> factor * factor [] at(0,factor) [+,END,;]
+	4 term -> factor [] at(0,factor) [+,END,;]
+	5 factor -> identifier [] at(0,identifier) [*,+,END,;]
+	6 factor -> number [] at(0,number) [*,+,END,;]
+21
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(4,;) [BEGIN]
+22
+	0 statement_list -> assignment ; statement_list [] at(3,) [END]
+23
+	0 assignment -> identifier := expression [] at(3,) [END,;]
+24
+	0 expression -> term + term [] at(1,+) [END,;]
+25
+	0 expression -> term + term [] at(1,+) [END,;]
+	1 expression -> term [] at(1,) [END,;]
+26
+	0 term -> factor * factor [] at(1,*) [+,END,;]
+27
+	0 term -> factor * factor [] at(1,*) [+,END,;]
+	1 term -> factor [] at(1,) [+,END,;]
+28
+	0 factor -> identifier [] at(1,) [*,+,END,;]
+29
+	0 factor -> number [] at(1,) [*,+,END,;]
+30
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(5,declarations) [BEGIN]
+	1 declarations -> VAR identifier : INTEGER ; declarations [] at(0,VAR) [BEGIN]
+	2 declarations -> VAR identifier : INTEGER ; declarations [reduce_epsilon(5)] at(6,) [BEGIN]
+31
+	0 expression -> term + term [] at(2,term) [END,;]
+	1 term -> factor * factor [] at(0,factor) [+,END,;]
+	2 term -> factor [] at(0,factor) [+,END,;]
+	3 factor -> identifier [] at(0,identifier) [*,+,END,;]
+	4 factor -> number [] at(0,number) [*,+,END,;]
+32
+	0 term -> factor * factor [] at(2,factor) [+,END,;]
+	1 factor -> identifier [] at(0,identifier) [*,+,END,;]
+	2 factor -> number [] at(0,number) [*,+,END,;]
+33
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(6,) [BEGIN]
+34
+	0 expression -> term + term [] at(3,) [END,;]
+35
+	0 term -> factor * factor [] at(3,) [+,END,;]
+36
+	0 program -> PROGRAM identifier ; declarations compound_statement . [] at(3,declarations) [$,BEGIN]
+	1 declarations -> VAR identifier : INTEGER ; declarations [] at(0,VAR) [$]
+	2 program -> PROGRAM identifier ; declarations compound_statement . [reduce_epsilon(3)] at(4,compound_statement) [$]
+	3 compound_statement -> BEGIN statement_list END [] at(0,BEGIN) [$]
+37
+	0 program -> PROGRAM identifier ; declarations compound_statement . [] at(4,compound_statement) [$]
+	1 compound_statement -> BEGIN statement_list END [] at(0,BEGIN) [$]
+38
+	0 compound_statement -> BEGIN statement_list END [] at(1,statement_list) [.]
+	1 statement_list -> assignment [] at(0,assignment) [.]
+	2 statement_list -> assignment ; statement_list [] at(0,assignment) [.]
+	3 assignment -> identifier := expression [] at(0,identifier) [.]
+39
+	0 statement_list -> assignment ; statement_list [] at(2,statement_list) [END]
+	1 statement_list -> assignment [] at(0,assignment) [END]
+	2 statement_list -> assignment ; statement_list [] at(0,assignment) [END]
+	3 assignment -> identifier := expression [] at(0,identifier) [END]
+40
+	0 assignment -> identifier := expression [] at(2,expression) [END,;]
+	1 expression -> term + term [] at(0,term) [END,;]
+	2 expression -> term [] at(0,term) [END,;]
+	3 term -> factor * factor [] at(0,factor) [END,;]
+	4 term -> factor [] at(0,factor) [END,;]
+	5 factor -> identifier [] at(0,identifier) [END,;]
+	6 factor -> number [] at(0,number) [END,;]
+41
+	0 expression -> term + term [] at(2,term) [END,;]
+	1 term -> factor * factor [] at(0,factor) [END,;]
+	2 term -> factor [] at(0,factor) [END,;]
+	3 factor -> identifier [] at(0,identifier) [END,;]
+	4 factor -> number [] at(0,number) [END,;]
+42
+	0 term -> factor * factor [] at(2,factor) [+,END,;]
+	1 factor -> identifier [] at(0,identifier) [+,END,;]
+	2 factor -> number [] at(0,number) [+,END,;]
+43
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(1,identifier) [$]
+44
+	0 compound_statement -> BEGIN statement_list END [] at(1,statement_list) [$]
+	1 statement_list -> assignment [] at(0,assignment) [$]
+	2 statement_list -> assignment ; statement_list [] at(0,assignment) [$]
+	3 assignment -> identifier := expression [] at(0,identifier) [$]
+45
+	0 statement_list -> assignment [] at(1,) [.]
+	1 statement_list -> assignment ; statement_list [] at(1,;) [.]
+46
+	0 assignment -> identifier := expression [] at(1,:=) [.]
+47
+	0 assignment -> identifier := expression [] at(1,:=) [END]
+48
+	0 term -> factor * factor [] at(1,*) [END,;]
+	1 term -> factor [] at(1,) [END,;]
+49
+	0 factor -> identifier [] at(1,) [END,;]
+50
+	0 factor -> number [] at(1,) [END,;]
+51
+	0 factor -> identifier [] at(1,) [+,END,;]
+52
+	0 factor -> number [] at(1,) [+,END,;]
+53
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(2,:) [$]
+54
+	0 compound_statement -> BEGIN statement_list END [] at(2,END) [$]
+55
+	0 statement_list -> assignment [] at(1,) [$]
+	1 statement_list -> assignment ; statement_list [] at(1,;) [$]
+56
+	0 assignment -> identifier := expression [] at(1,:=) [$]
+57
+	0 statement_list -> assignment ; statement_list [] at(2,statement_list) [.]
+	1 statement_list -> assignment [] at(0,assignment) [.]
+	2 statement_list -> assignment ; statement_list [] at(0,assignment) [.]
+	3 assignment -> identifier := expression [] at(0,identifier) [.]
+58
+	0 assignment -> identifier := expression [] at(2,expression) [.]
+	1 expression -> term + term [] at(0,term) [.]
+	2 expression -> term [] at(0,term) [.]
+	3 term -> factor * factor [] at(0,factor) [.]
+	4 term -> factor [] at(0,factor) [.]
+	5 factor -> identifier [] at(0,identifier) [.]
+	6 factor -> number [] at(0,number) [.]
+59
+	0 assignment -> identifier := expression [] at(2,expression) [END]
+	1 expression -> term + term [] at(0,term) [END]
+	2 expression -> term [] at(0,term) [END]
+	3 term -> factor * factor [] at(0,factor) [END]
+	4 term -> factor [] at(0,factor) [END]
+	5 factor -> identifier [] at(0,identifier) [END]
+	6 factor -> number [] at(0,number) [END]
+60
+	0 term -> factor * factor [] at(2,factor) [END,;]
+	1 factor -> identifier [] at(0,identifier) [END,;]
+	2 factor -> number [] at(0,number) [END,;]
+61
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(3,INTEGER) [$]
+62
+	0 compound_statement -> BEGIN statement_list END [] at(3,) [$]
+63
+	0 statement_list -> assignment ; statement_list [] at(2,statement_list) [$]
+	1 statement_list -> assignment [] at(0,assignment) [$]
+	2 statement_list -> assignment ; statement_list [] at(0,assignment) [$]
+	3 assignment -> identifier := expression [] at(0,identifier) [$]
+64
+	0 assignment -> identifier := expression [] at(2,expression) [$]
+	1 expression -> term + term [] at(0,term) [$]
+	2 expression -> term [] at(0,term) [$]
+	3 term -> factor * factor [] at(0,factor) [$]
+	4 term -> factor [] at(0,factor) [$]
+	5 factor -> identifier [] at(0,identifier) [$]
+	6 factor -> number [] at(0,number) [$,;]
+65
+	0 statement_list -> assignment ; statement_list [] at(3,) [.]
+66
+	0 assignment -> identifier := expression [] at(3,) [.]
+67
+	0 expression -> term + term [] at(1,+) [.]
+	1 expression -> term [] at(1,) [.]
+68
+	0 term -> factor * factor [] at(1,*) [.]
+	1 term -> factor [] at(1,) [.]
+69
+	0 factor -> identifier [] at(1,) [.]
+70
+	0 factor -> number [] at(1,) [.]
+71
+	0 assignment -> identifier := expression [] at(3,) [END]
+72
+	0 expression -> term + term [] at(1,+) [END]
+	1 expression -> term [] at(1,) [END]
+73
+	0 term -> factor * factor [] at(1,*) [END]
+	1 term -> factor [] at(1,) [END]
+74
+	0 factor -> identifier [] at(1,) [END]
+75
+	0 factor -> number [] at(1,) [END]
+76
+	0 term -> factor * factor [] at(3,) [END,;]
+77
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(4,;) [$]
+78
+	0 statement_list -> assignment ; statement_list [] at(3,) [$]
+79
+	0 assignment -> identifier := expression [] at(3,) [$]
+80
+	0 expression -> term + term [] at(1,+) [$]
+	1 expression -> term [] at(1,) [$]
+81
+	0 term -> factor * factor [] at(1,*) [$]
+	1 term -> factor [] at(1,) [$,;]
+82
+	0 factor -> identifier [] at(1,) [$]
+83
+	0 factor -> number [] at(1,) [$]
+84
+	0 expression -> term + term [] at(2,term) [.]
+	1 term -> factor * factor [] at(0,factor) [.]
+	2 term -> factor [] at(0,factor) [.]
+	3 factor -> identifier [] at(0,identifier) [.]
+	4 factor -> number [] at(0,number) [.]
+85
+	0 term -> factor * factor [] at(2,factor) [.]
+	1 factor -> identifier [] at(0,identifier) [.]
+	2 factor -> number [] at(0,number) [.]
+86
+	0 expression -> term + term [] at(2,term) [END]
+	1 term -> factor * factor [] at(0,factor) [END]
+	2 term -> factor [] at(0,factor) [END]
+	3 factor -> identifier [] at(0,identifier) [END]
+	4 factor -> number [] at(0,number) [END]
+87
+	0 term -> factor * factor [] at(2,factor) [END]
+	1 factor -> identifier [] at(0,identifier) [END]
+	2 factor -> number [] at(0,number) [END]
+88
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(5,declarations) [$]
+	1 declarations -> VAR identifier : INTEGER ; declarations [] at(0,VAR) [$]
+	2 declarations -> VAR identifier : INTEGER ; declarations [reduce_epsilon(5)] at(6,) [$]
+89
+	0 expression -> term + term [] at(2,term) [$]
+	1 term -> factor * factor [] at(0,factor) [$]
+	2 term -> factor [] at(0,factor) [$]
+	3 factor -> identifier [] at(0,identifier) [$]
+	4 factor -> number [] at(0,number) [$]
+90
+	0 term -> factor * factor [] at(2,factor) [$]
+	1 factor -> identifier [] at(0,identifier) [$]
+	2 factor -> number [] at(0,number) [$]
+91
+	0 expression -> term + term [] at(3,) [.]
+92
+	0 term -> factor * factor [] at(3,) [.]
+93
+	0 expression -> term + term [] at(3,) [END]
+94
+	0 term -> factor * factor [] at(3,) [END]
+95
+	0 declarations -> VAR identifier : INTEGER ; declarations [] at(6,) [$]
+96
+	0 expression -> term + term [] at(3,) [$]
+97
+	0 term -> factor * factor [] at(3,) [$]

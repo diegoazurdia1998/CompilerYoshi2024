@@ -13,14 +13,21 @@ class Program
         Dictionary<string, List<string>> sections = sectionsValidator.ValidateSections(filePath);
         // Validar secciones extraidas
         grammar.ValidateSections(sections);
+        int i= 1;
+        using (StreamWriter writer = new StreamWriter("Productions.txt"))
+        {
+            foreach (var prod in grammar.Productions)
+            {
+                writer.WriteLine($"{i}. {prod.ToString()}");
+                i++;
+            }
+            
+        }
         // Generar Tabla de parser
-        LALRParserGenerator parser = new LALRParserGenerator(grammar);
+        //LALRParserGenerator parser = new LALRParserGenerator(grammar);
         var LALR = new lalrLecter(grammar);
-        string inputPath = "prueba1.txt";
+        string inputPath = "input1.txt";
         LALR.Parse(inputPath);
-
-
-        parser.Parse("prueba1.txt");
         Console.WriteLine("");
 
 

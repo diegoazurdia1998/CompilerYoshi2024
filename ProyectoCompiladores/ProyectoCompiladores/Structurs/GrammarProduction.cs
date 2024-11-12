@@ -30,14 +30,14 @@ namespace ProyectoCompiladores.Structurs
         
         public string TrimItem(string item)
         {
-            string trimItem = item.Trim();
+            string trimItem = item.Trim().Trim(';');
             if (item.StartsWith("<"))
             {
-                trimItem = trimItem.Trim('<').Trim('>');
+                trimItem = trimItem.Trim('<').Trim('>').Trim();
             }
             else if (item.StartsWith("\'"))
             {
-                trimItem = trimItem.Trim('\'');
+                trimItem = trimItem.Trim('\'').Trim();
             }
             return trimItem;
         }

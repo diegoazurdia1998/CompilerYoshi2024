@@ -1,0 +1,6 @@
+PROGRAM MiPrograma ;
+VAR x : INTEGER ;
+BEGIN
+    x := 5
+    x := x + 10
+END.

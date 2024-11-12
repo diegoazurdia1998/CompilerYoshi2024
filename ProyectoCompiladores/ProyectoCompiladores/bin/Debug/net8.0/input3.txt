@@ -1,0 +1,6 @@
+PROGRAM Contador ;
+VAR contador : INTEGER ;
+BEGIN
+    contador := 0
+    contador := contador + 1
+END .
